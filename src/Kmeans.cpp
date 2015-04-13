@@ -1,4 +1,4 @@
-//#include "Kmeans.h"
+#include "../include/Kmeans.h"
 #include <iostream>
 
 //ctor
@@ -22,5 +22,5 @@ void Kmeans<PointsBaseType, MetricType, InitialAssignment>::Cluster()
 
 }
 
-//template class Kmeans<float, float, float>;
+template class Kmeans<float, float, float>;
 

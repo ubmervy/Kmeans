@@ -1,6 +1,5 @@
 #ifndef KMEANS_H
 #define KMEANS_H
-#include <vector>
 
 template <typename PointsBaseType, typename MetricType, typename InitialAssignment>
 class Kmeans
@@ -13,5 +12,5 @@ class Kmeans
     private:
 };
 
-#include "/home/ubuntu14/Projects/Kmeans/src/Kmeans.cpp"
+//#include "../src/Kmeans.cpp"
 #endif // KMEANS_H

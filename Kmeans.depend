@@ -1,15 +1,15 @@
 # depslib dependency file v1.0
-1428831512 source:/home/ubuntu14/Projects/Kmeans/main.cpp
+1428910340 source:/home/ubuntu14/Projects/Kmeans/main.cpp
 	<iostream>
-	"Kmeans.h"
+	"./include/Kmeans.h"
 
-1428831710 /home/ubuntu14/Projects/Kmeans/include/Kmeans.h
-	"/home/ubuntu14/Projects/Kmeans/src/Kmeans.cpp"
+1428911236 /home/ubuntu14/Projects/Kmeans/include/Kmeans.h
 
 1428827966 source:/home/ubuntu14/Projects/Kmeans/src/Kmeans.cpp
 	"Kmeans.h"
 	<iostream>
 
-1428831837 /home/ubuntu14/Projects/Kmeans/src/Kmeans.cpp
+1428911228 /home/ubuntu14/Projects/Kmeans/src/Kmeans.cpp
+	"../include/Kmeans.h"
 	<iostream>
 
