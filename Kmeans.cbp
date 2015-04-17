@@ -34,11 +34,17 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Unit filename="include/DataManipulation.h" />
+		<Unit filename="include/EuclidianDistance.h" />
 		<Unit filename="include/Kmeans.h" />
-		<Unit filename="main.cpp" />
-		<Unit filename="src/Kmeans.cpp">
-			<Option target="Release" />
-		</Unit>
+		<Unit filename="include/PointStealer.h" />
+		<Unit filename="include/RandomPoints.h" />
+		<Unit filename="src/DataManipulation.cpp" />
+		<Unit filename="src/EuclidianDistance.cpp" />
+		<Unit filename="src/Kmeans.cpp" />
+		<Unit filename="src/PointStealer.cpp" />
+		<Unit filename="src/RandomPoints.cpp" />
+		<Unit filename="src/main.cpp" />
 		<Extensions>
 			<code_completion />
 			<debugger />
