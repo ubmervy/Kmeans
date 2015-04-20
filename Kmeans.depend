@@ -7,7 +7,7 @@
 	<iostream>
 	<vector>
 
-1429256034 /home/ubuntu14/Projects/Kmeans/include/Kmeans.h
+1429563779 /home/ubuntu14/Projects/Kmeans/include/Kmeans.h
 	<map>
 	<vector>
 	<iostream>
@@ -16,7 +16,7 @@
 	"../include/EuclidianDistance.h"
 	"../include/RandomPoints.h"
 
-1429193506 source:/home/ubuntu14/Projects/Kmeans/src/Kmeans.cpp
+1429563838 source:/home/ubuntu14/Projects/Kmeans/src/Kmeans.cpp
 	"../include/Kmeans.h"
 	"../include/EuclidianDistance.h"
 	"../include/PointStealer.h"
@@ -37,32 +37,35 @@
 	"boost/random.hpp"
 	<time.h>
 
-1429257384 source:/home/ubuntu14/Projects/Kmeans/src/EuclidianDistance.cpp
+1429567047 source:/home/ubuntu14/Projects/Kmeans/src/EuclidianDistance.cpp
 	"../include/EuclidianDistance.h"
 	"../include/Kmeans.h"
 	<vector>
 	<math.h>
 	<iterator>
+	<limits>
 
-1429087735 /home/ubuntu14/Projects/Kmeans/include/EuclidianDistance.h
+1429554092 /home/ubuntu14/Projects/Kmeans/include/EuclidianDistance.h
 	"../include/Kmeans.h"
 	"../include/RandomPoints.h"
 	"../include/PointStealer.h"
+	<vector>
+	<map>
 
 1428926196 source:/home/ubuntu14/Projects/Kmeans/src/InitialAssignment.cpp
 	"InitialAssignment.h"
 
 1428926196 /home/ubuntu14/Projects/Kmeans/include/InitialAssignment.h
 
-1429258370 source:/home/ubuntu14/Projects/Kmeans/src/RandomPoints.cpp
+1429554198 source:/home/ubuntu14/Projects/Kmeans/src/RandomPoints.cpp
 	"../include/RandomPoints.h"
 	"../include/Kmeans.h"
 	"../include/DataManipulation.h"
 	"../include/EuclidianDistance.h"
 	"../include/PointStealer.h"
-	<set>
+	<unordered_set>
 
-1429090931 /home/ubuntu14/Projects/Kmeans/include/RandomPoints.h
+1429544924 /home/ubuntu14/Projects/Kmeans/include/RandomPoints.h
 	"../include/Kmeans.h"
 	"../include/EuclidianDistance.h"
 	"../include/PointStealer.h"
@@ -82,7 +85,7 @@
 1429097874 source:/home/ubuntu14/Projects/Kmeans/src/PointStealer.cpp
 	"../include/PointStealer.h"
 
-1429257275 source:/home/ubuntu14/Projects/Kmeans/src/main.cpp
+1429563723 source:/home/ubuntu14/Projects/Kmeans/src/main.cpp
 	"../include/Kmeans.h"
 	"../include/EuclidianDistance.h"
 	"../include/PointStealer.h"

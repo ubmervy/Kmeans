@@ -3,10 +3,13 @@
 #include "../include/Kmeans.h"
 #include "../include/RandomPoints.h"
 #include "../include/PointStealer.h"
+#include <vector>
+#include <map>
 
-template <typename PointsBaseType, typename IterationMethod, typename EmptyClusterPolicy, typename InitialCentroids>
+template <typename PointsBaseType, template<typename> class IterationMethod, typename EmptyClusterPolicy, typename InitialCentroids>
 class Kmeans;
 
+template <typename PointsBaseType>
 class EuclidianDistance
 {
 
@@ -14,9 +17,15 @@ class EuclidianDistance
         EuclidianDistance();
         virtual ~EuclidianDistance();
 
-        std::vector < std::vector <double> > distances;
+        std::vector <std::vector <double>> distances;
+        std::map<int, std::vector <std::vector<PointsBaseType>*>> new_assignments;
+       /* template <U>
+        structure new_assignments
+        {
+            typename std::map<int, std::vector <std::vector<U>*>> new_assignments;
+        }*/
 
-        template <typename PointsBaseType, typename IterationMethod, typename EmptyClusterPolicy, typename InitialCentroids>
+        template <template<typename> class IterationMethod, typename EmptyClusterPolicy, typename InitialCentroids>
         void Iterate(Kmeans<PointsBaseType, IterationMethod, EmptyClusterPolicy, InitialCentroids>& km);
 
 };

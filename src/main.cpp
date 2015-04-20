@@ -14,9 +14,15 @@ int main()
     int points_number = 10;
     int dimention = 2;
     std::vector<std::vector<float>> dataset;
-    dataset.resize(points_number, std::vector<float>(dimention));
+    dataset = {
+    {1.00, 2.00},
+    {0.00, 5.00},
+    {2.00, 6.00},
+    {3.00, 1.00}
+    };
+    //dataset.resize(points_number, std::vector<float>(dimention));
     DataManipulation dm;
-
+/*
     std::cout << "Generate dataset" << std::endl;
     for (int i = 0; i < points_number; ++i)
     {
@@ -26,9 +32,9 @@ int main()
             std::cout << "[" << i << "][" << j << "] = " << dataset[i][j] << '\t';
         }
         std::cout << std::endl;
-    }
+    }*/
 
-    Kmeans<float, EuclidianDistance, PointStealer, RandomPoints> km (8, dataset);
+    Kmeans<float, EuclidianDistance, PointStealer, RandomPoints> km (2, 2, dataset);
     km.Cluster();
     return 0;
 }

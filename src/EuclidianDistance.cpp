@@ -3,88 +3,105 @@
 #include <vector>
 #include <math.h>
 #include <iterator>
+#include <limits>
+#include <algorithm>
 
-template <typename PointsBaseType, typename IterationMethod, typename EmptyClusterPolicy, typename InitialCentroids>
+template <typename PointsBaseType, template<typename> class IterationMethod, typename EmptyClusterPolicy, typename InitialCentroids>
 class Kmeans;
 
-EuclidianDistance::EuclidianDistance()
+template<typename PointsBaseType>
+EuclidianDistance<PointsBaseType>::EuclidianDistance()
 {
 
 }
 
-EuclidianDistance::~EuclidianDistance()
+template<typename PointsBaseType>
+EuclidianDistance<PointsBaseType>::~EuclidianDistance()
 {
     //dtor
 }
 
-template <typename PointsBaseType, typename IterationMethod, typename EmptyClusterPolicy, typename InitialCentroids>
-void EuclidianDistance::Iterate (Kmeans<PointsBaseType, IterationMethod, EmptyClusterPolicy, InitialCentroids>& km)
+template<typename PointsBaseType>
+template <template<typename> class IterationMethod, typename EmptyClusterPolicy, typename InitialCentroids>
+void EuclidianDistance<PointsBaseType>::Iterate (Kmeans<PointsBaseType, IterationMethod, EmptyClusterPolicy, InitialCentroids>& km)
 {
-    distances.resize(km.clusters_number, std::vector<double>(km.dataset.size()));
-    //calculate points-centroids distance
-    for (int i = 0; i < km.clusters_number; ++i)
-    {
-        for (int j = 0; j < km.dataset.size(); ++j)
-        {
-            double temp = 0.0;
-            for (int k = 0; k < km.dataset[i].size(); k++)
-            {
-                temp += pow((km.dataset[j][k] - km.centroids[i][k]), 2);
-            }
-            distances[i][j] = sqrt(temp);
-        }
-    }
+    distances.resize(km.clusters_number, std::vector<double>(km.points_number));
+    int min_distance_cluster;
+    double min_distance;
+    int centroid_movement = 0;
 
-    //assign points to clusters
-    int min_distance_index;
+    //calculate points-centroids distance
     for (int i = 0; i < km.points_number; ++i)
     {
-        min_distance_index = 0;
+        min_distance_cluster = 0;
+        min_distance = std::numeric_limits<float>::max();
         for (int j = 0; j < km.clusters_number; ++j)
         {
-            if (distances[j][i] < distances[min_distance_index][i])
-                min_distance_index = j;
-        }
-
-        for (int k = 0; k < km.dataset[i].size(); ++k)
-        {
-
-            typename std::vector<PointsBaseType>::iterator it = km.dataset[i].begin();
-            std::advance(it, k);
-            std::cout << *it;
-            km.assignments[min_distance_index].resize(km.clusters_number);
-            km.assignments[min_distance_index][i].push_back(&(*it));
-            //std::cout << "Cluster: " << min_distance_index << " Point [" << i << "][" << k << "]" << std::endl;
-        }
-        //std::cout << std::endl;
-    }
-
-    //re-calculate clusters means
-    std::vector < std::vector < PointsBaseType > > cluster_count;
-    cluster_count.resize(km.clusters_number, std::vector < PointsBaseType > (km.coordinates_number));
-    for (int i = 0; i < km.clusters_number; ++i)
-    {
-
-        for (int j = 0; j < km.assignments.size(); ++j)
-        {
-            for (int k = 0; k < km.assignments.size(); ++k)
+            for (int k = 0; k < km.coordinates_number; k++)
             {
-                //cluster_count[i] = *(km.assignments[i][j]);
-                //std::cout << (km.assignments[i][j])->[k] << std::endl;
+                distances[j][i] += pow((km.dataset[i][k] - km.centroids[j][k]), 2);
             }
-
-            for (int k = 0; k < km.coordinates_number; ++k)
+            // std::cout << "dataset [" << j << "][" << k << "] = " << km.dataset[j][k] << std::endl;
+            // std::cout << "centroids [" << i << "][" << k << "] = " << km.centroids[i][k] << std::endl;
+            if (distances[j][i] < min_distance)
             {
-                km.centroids[i][k] = cluster_count[i][k]/cluster_count[i].size();
+                min_distance_cluster = j;
+                min_distance = distances[j][i];
             }
         }
+
+        //
+        int points_movements = 0;
+        if(!km.assignments[min_distance_cluster].empty())
+        {
+
+            //std::cout << "DDD" << &(km.dataset[i]) << std::endl;
+            //std::cout << "AAA" << km.assignments[min_distance_cluster][0]->data() << std::endl;
+            //std::cout << "AAA" << *(km.assignments[min_distance_cluster].begin()) << std::endl;
+            if(std::find(km.assignments[min_distance_cluster].begin(), km.assignments[min_distance_cluster].end(), &(km.dataset[i])) == km.assignments[min_distance_cluster].end())
+            {
+                points_movements++;
+            }
+        }
+        std::cout << "points_movements: " << points_movements << std::endl;
+
+        km.assignments[min_distance_cluster].push_back(&(km.dataset[i]));
+        std::cout << "point " << i << " - cluster" << min_distance_cluster << std::endl;
+
+        if (km.assignments.size() < km.clusters_number)
+        {
+            //km.empty_cluster_handler.HandleEmptyClusters();
+        }
     }
 
-    if (km.assignments.size() < km.clusters_number)
+//re-calculate clusters means
+
+//make new_centroids filled with zeros before new iteration begin
+    typename std::vector <std::vector<PointsBaseType>> new_centroids;
+    new_centroids.resize(km.centroids.size(), std::vector<PointsBaseType>(km.centroids[0].size()));
+    for (int i = 0; i < km.centroids.size(); ++i)
     {
-        //km.empty_cluster_handler.HandleEmptyClusters();
+        std::fill(new_centroids[i].begin(), new_centroids[i].end(), 0.00);
+    }
+
+//calculate new centroid means
+    for (int j = 0; j < km.clusters_number; ++j)
+    {
+        for (int k = 0; k < km.coordinates_number; ++k)
+        {
+            for (int i = 0; i < km.assignments[j].size(); ++i)
+            {
+                new_centroids[j][k] += km.assignments[j][i]->at(k);
+            }
+            //std::cout << km.assignments[j][k]->at(k) << std::endl;
+
+            new_centroids[j][k] /= km.assignments[j].size();
+        }
+        std::cout << "centroid " << j << ": " << new_centroids[j][0] << '\t' << new_centroids[j][1];
+        std::cout << std::endl;
     }
 }
 
-template void EuclidianDistance::Iterate (Kmeans<float, EuclidianDistance, PointStealer, RandomPoints>& km);
+template void EuclidianDistance<float>::Iterate (Kmeans<float, EuclidianDistance, PointStealer, RandomPoints>& km);
+template class EuclidianDistance<float>;
 
