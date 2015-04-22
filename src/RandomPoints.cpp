@@ -7,7 +7,7 @@
 
 DataManipulation dm;
 
-template <typename PointsBaseType, template<typename> class IterationMethod, typename EmptyClusterPolicy, typename InitialCentroids>
+template <typename PointsBaseType, typename EmptyClusterPolicy, template<typename, typename> class IterationMethod, typename InitialCentroids>
 class Kmeans;
 
 RandomPoints::RandomPoints()
@@ -20,8 +20,8 @@ RandomPoints::~RandomPoints()
     //dtor
 }
 
-template <typename PointsBaseType, template<typename> class IterationMethod, typename EmptyClusterPolicy, typename InitialCentroids>
-void RandomPoints::Initialize(Kmeans<PointsBaseType, IterationMethod, EmptyClusterPolicy, InitialCentroids>& km)
+template <typename PointsBaseType, typename EmptyClusterPolicy, template<typename, typename> class IterationMethod, typename InitialCentroids>
+void RandomPoints::Initialize(Kmeans<PointsBaseType, EmptyClusterPolicy, IterationMethod, InitialCentroids>& km)
 {
     km.centroids.resize(km.clusters_number, std::vector <PointsBaseType>(km.coordinates_number));
     std::unordered_set<int> random_points; //a set of unique points (dataset indexes)
@@ -61,4 +61,4 @@ void RandomPoints::Initialize(Kmeans<PointsBaseType, IterationMethod, EmptyClust
     }
 }
 
-template void RandomPoints::Initialize (Kmeans<float, EuclidianDistance, PointStealer, RandomPoints>& km);
+template void RandomPoints::Initialize (Kmeans<float, PointStealer, EuclidianDistance, RandomPoints>& km);

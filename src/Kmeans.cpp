@@ -4,17 +4,21 @@
 #include "../include/RandomPoints.h"
 #include <iostream>
 
-template <typename PointsBaseType>
+template <typename PointsBaseType, typename EmptyClusterPolicy>
 class EuclidianDistance;
 
 //ctor
-template <typename PointsBaseType, template<typename> class IterationMethod, typename EmptyClusterPolicy, typename InitialCentroids>
-Kmeans<PointsBaseType, IterationMethod, EmptyClusterPolicy, InitialCentroids>::Kmeans(int clusters_number,
-        int max_iterations,
-        std::vector<std::vector<PointsBaseType>>& dataset):
+template <typename PointsBaseType, typename EmptyClusterPolicy, template<typename, typename> class IterationMethod, typename InitialCentroids>
+Kmeans<PointsBaseType, EmptyClusterPolicy, IterationMethod, InitialCentroids>::Kmeans(  int clusters_number,
+                                                                                        int max_iterations,
+                                                                                        std::vector<std::vector<PointsBaseType>>& dataset,
+                                                                                        int points_move_thrsh,
+                                                                                        PointsBaseType centroid_movement_thrsh):
     clusters_number(clusters_number),
     max_iterations(max_iterations),
     dataset(dataset),
+    points_move_thrsh(points_move_thrsh),
+    centroid_movement_thrsh(centroid_movement_thrsh),
     points_number(dataset.size()),
     coordinates_number(dataset[0].size())
 
@@ -30,25 +34,20 @@ Kmeans<PointsBaseType, IterationMethod, EmptyClusterPolicy, InitialCentroids>::K
 }
 
 //dtor
-template <typename PointsBaseType, template<typename> class IterationMethod, typename EmptyClusterPolicy, typename InitialCentroids>
-Kmeans<PointsBaseType, IterationMethod, EmptyClusterPolicy, InitialCentroids>::~Kmeans()
+template <typename PointsBaseType, typename EmptyClusterPolicy, template<typename, typename> class IterationMethod, typename InitialCentroids>
+Kmeans<PointsBaseType, EmptyClusterPolicy, IterationMethod, InitialCentroids>::~Kmeans()
 {
 
 }
 
 //Cluster
-template <typename PointsBaseType, template<typename> class IterationMethod, typename EmptyClusterPolicy, typename InitialCentroids>
-void Kmeans<PointsBaseType, IterationMethod, EmptyClusterPolicy, InitialCentroids>::Cluster()
+template <typename PointsBaseType, typename EmptyClusterPolicy, template<typename, typename> class IterationMethod, typename InitialCentroids>
+void Kmeans<PointsBaseType, EmptyClusterPolicy, IterationMethod, InitialCentroids>::Cluster()
 {
-    int iterations = max_iterations;
-    while (iterations)
-    {
         iteration_method.Iterate(*this);
-        --iterations;
-    };
 }
 
-template class Kmeans<float, EuclidianDistance, PointStealer, RandomPoints>;
+template class Kmeans<float, PointStealer, EuclidianDistance, RandomPoints>;
 
 
 

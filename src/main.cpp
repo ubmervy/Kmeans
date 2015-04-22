@@ -11,14 +11,22 @@ const float rangeMax = sqrt(std::numeric_limits<float>::max())/2;
 
 int main()
 {
-    int points_number = 10;
-    int dimention = 2;
+    //int points_number = 10;
+    //int dimention = 2;
     std::vector<std::vector<float>> dataset;
     dataset = {
-    {1.00, 2.00},
-    {0.00, 5.00},
-    {2.00, 6.00},
-    {3.00, 1.00}
+    {15.00, 26.00},
+    {14.00, 25.00},
+    {14.00, 24.00},
+    {15.00, 24.00},
+    {15.00, 25.00},
+    {14.00, 23.00},
+    {33.00, 2.00},
+    {34.00, 5.00},
+    {38.00, 24.00},
+    {15.00, 1.00},
+    {35.00, 3.00},
+    {34.00, 2.00},
     };
     //dataset.resize(points_number, std::vector<float>(dimention));
     DataManipulation dm;
@@ -34,7 +42,7 @@ int main()
         std::cout << std::endl;
     }*/
 
-    Kmeans<float, EuclidianDistance, PointStealer, RandomPoints> km (2, 2, dataset);
+    Kmeans<float, PointStealer, EuclidianDistance, RandomPoints> km (3, 4, dataset);
     km.Cluster();
     return 0;
 }

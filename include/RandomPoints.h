@@ -4,7 +4,7 @@
 #include "../include/EuclidianDistance.h"
 #include "../include/PointStealer.h"
 
-template <typename PointsBaseType, template<typename> class IterationMethod, typename EmptyClusterPolicy, typename InitialCentroids>
+template <typename PointsBaseType, typename EmptyClusterPolicy, template<class, class> class IterationMethod, typename InitialCentroids>
 class Kmeans;
 
 class RandomPoints
@@ -12,8 +12,8 @@ class RandomPoints
     public:
         RandomPoints();
         virtual ~RandomPoints();
-        template <typename PointsBaseType, template<typename> class IterationMethod, typename EmptyClusterPolicy, typename InitialCentroids>
-        void Initialize(Kmeans<PointsBaseType, IterationMethod, EmptyClusterPolicy, InitialCentroids>& km);
+        template <typename PointsBaseType, typename EmptyClusterPolicy, template<class, class> class IterationMethod, typename InitialCentroids>
+        void Initialize(Kmeans<PointsBaseType, EmptyClusterPolicy, IterationMethod, InitialCentroids>& km);
 };
 
 #endif // RANDOMPOINTS_H

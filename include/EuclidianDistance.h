@@ -6,10 +6,10 @@
 #include <vector>
 #include <map>
 
-template <typename PointsBaseType, template<typename> class IterationMethod, typename EmptyClusterPolicy, typename InitialCentroids>
+template <typename PointsBaseType, typename EmptyClusterPolicy, template<typename, typename> class IterationMethod, typename InitialCentroids>
 class Kmeans;
 
-template <typename PointsBaseType>
+template <typename PointsBaseType, typename EmptyClusterPolicy>
 class EuclidianDistance
 {
 
@@ -19,15 +19,14 @@ class EuclidianDistance
 
         std::vector <std::vector <double>> distances;
         std::map<int, std::vector <std::vector<PointsBaseType>*>> new_assignments;
-       /* template <U>
-        structure new_assignments
-        {
-            typename std::map<int, std::vector <std::vector<U>*>> new_assignments;
-        }*/
+        int points_movements;
 
-        template <template<typename> class IterationMethod, typename EmptyClusterPolicy, typename InitialCentroids>
-        void Iterate(Kmeans<PointsBaseType, IterationMethod, EmptyClusterPolicy, InitialCentroids>& km);
+        template <template<typename, typename> class IterationMethod, typename InitialCentroids>
+        void Iterate(Kmeans<PointsBaseType, EmptyClusterPolicy, IterationMethod, InitialCentroids>& km);
 
+        template<typename U, typename V, template<typename, typename> class IterationMethod, typename InitialCentroids>
+        friend void EmptyClusterPolicy::HandleEmptyClusters(EuclidianDistance<U, V> &iter_method,
+                                                            Kmeans<U, V, IterationMethod, InitialCentroids>& km);
 };
 
 //#include "../src/EuclidianDistance.cpp"
