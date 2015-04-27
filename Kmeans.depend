@@ -7,7 +7,7 @@
 	<iostream>
 	<vector>
 
-1429714387 /home/ubuntu14/Projects/Kmeans/include/Kmeans.h
+1430064071 /home/ubuntu14/Projects/Kmeans/include/Kmeans.h
 	<map>
 	<vector>
 	<iostream>
@@ -16,11 +16,8 @@
 	"../include/EuclidianDistance.h"
 	"../include/RandomPoints.h"
 
-1429698672 source:/home/ubuntu14/Projects/Kmeans/src/Kmeans.cpp
+1429808096 source:/home/ubuntu14/Projects/Kmeans/src/Kmeans.cpp
 	"../include/Kmeans.h"
-	"../include/EuclidianDistance.h"
-	"../include/PointStealer.h"
-	"../include/RandomPoints.h"
 	<iostream>
 
 1428935782 /home/ubuntu14/Projects/Kmeans/src/Kmeans.cpp
@@ -37,29 +34,30 @@
 	"boost/random.hpp"
 	<time.h>
 
-1429737408 source:/home/ubuntu14/Projects/Kmeans/src/EuclidianDistance.cpp
+1430064142 source:/home/ubuntu14/Projects/Kmeans/src/EuclidianDistance.cpp
 	"../include/EuclidianDistance.h"
 	"../include/PointStealer.h"
+	"../include/RandomPoints.h"
 	"../include/Kmeans.h"
+	<iostream>
 	<vector>
 	<math.h>
 	<iterator>
 	<limits>
 	<algorithm>
 
-1429720145 /home/ubuntu14/Projects/Kmeans/include/EuclidianDistance.h
-	"../include/Kmeans.h"
-	"../include/RandomPoints.h"
+1429915416 /home/ubuntu14/Projects/Kmeans/include/EuclidianDistance.h
 	"../include/PointStealer.h"
 	<vector>
 	<map>
+	<utility>
 
 1428926196 source:/home/ubuntu14/Projects/Kmeans/src/InitialAssignment.cpp
 	"InitialAssignment.h"
 
 1428926196 /home/ubuntu14/Projects/Kmeans/include/InitialAssignment.h
 
-1429703513 source:/home/ubuntu14/Projects/Kmeans/src/RandomPoints.cpp
+1429915396 source:/home/ubuntu14/Projects/Kmeans/src/RandomPoints.cpp
 	"../include/RandomPoints.h"
 	"../include/Kmeans.h"
 	"../include/DataManipulation.h"
@@ -67,40 +65,50 @@
 	"../include/PointStealer.h"
 	<unordered_set>
 
-1429623846 /home/ubuntu14/Projects/Kmeans/include/RandomPoints.h
-	"../include/Kmeans.h"
-	"../include/EuclidianDistance.h"
-	"../include/PointStealer.h"
+1429807794 /home/ubuntu14/Projects/Kmeans/include/RandomPoints.h
 
 1428931171 source:/home/ubuntu14/Projects/Kmeans/src/PointerStealer.cpp
 	"PointerStealer.h"
 
 1428931171 /home/ubuntu14/Projects/Kmeans/include/PointerStealer.h
 
-1429003407 /home/ubuntu14/Projects/Kmeans/src/EuclidianDistance.cpp
-	"../include/Kmeans.h"
+1429807722 /home/ubuntu14/Projects/Kmeans/src/EuclidianDistance.cpp
+	"../include/EuclidianDistance.h"
+	"../include/PointStealer.h"
+	"../include/RandomPoints.h"
+	<iostream>
 	<vector>
 	<math.h>
+	<iterator>
+	<limits>
+	<algorithm>
 
-1429639119 /home/ubuntu14/Projects/Kmeans/include/PointStealer.h
-	"../include/EuclidianDistance.h"
-	"../include/Kmeans.h"
+1429915396 /home/ubuntu14/Projects/Kmeans/include/PointStealer.h
+	<utility>
 
-1429654438 source:/home/ubuntu14/Projects/Kmeans/src/PointStealer.cpp
+1429919408 source:/home/ubuntu14/Projects/Kmeans/src/PointStealer.cpp
 	"../include/PointStealer.h"
 	"../include/EuclidianDistance.h"
 	<iostream>
 	<set>
 	<iostream>
 	<limits>
+	<vector>
 	<algorithm>
+	<utility>
 
-1429716121 source:/home/ubuntu14/Projects/Kmeans/src/main.cpp
+1430064071 source:/home/ubuntu14/Projects/Kmeans/src/main.cpp
 	"../include/Kmeans.h"
-	"../include/EuclidianDistance.h"
-	"../include/PointStealer.h"
-	"../include/RandomPoints.h"
 	"../include/DataManipulation.h"
 	<iostream>
 	<vector>
+
+1429809455 /home/ubuntu14/Projects/Kmeans/src/PointStealer.cpp
+	"../include/PointStealer.h"
+	<iostream>
+	<set>
+	<iostream>
+	<limits>
+	<vector>
+	<algorithm>
 

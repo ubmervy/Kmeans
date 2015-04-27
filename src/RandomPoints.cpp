@@ -7,7 +7,7 @@
 
 DataManipulation dm;
 
-template <typename PointsBaseType, typename EmptyClusterPolicy, template<typename, typename> class IterationMethod, typename InitialCentroids>
+template <typename PointsBaseType, typename EmptyClusterPolicy, typename IterationMethod, typename InitialCentroids>
 class Kmeans;
 
 RandomPoints::RandomPoints()
@@ -20,7 +20,7 @@ RandomPoints::~RandomPoints()
     //dtor
 }
 
-template <typename PointsBaseType, typename EmptyClusterPolicy, template<typename, typename> class IterationMethod, typename InitialCentroids>
+template <typename PointsBaseType, typename EmptyClusterPolicy, typename IterationMethod, typename InitialCentroids>
 void RandomPoints::Initialize(Kmeans<PointsBaseType, EmptyClusterPolicy, IterationMethod, InitialCentroids>& km)
 {
     km.centroids.resize(km.clusters_number, std::vector <PointsBaseType>(km.coordinates_number));
@@ -44,12 +44,14 @@ void RandomPoints::Initialize(Kmeans<PointsBaseType, EmptyClusterPolicy, Iterati
 
     //initialize centroids by random dataset points
     for (it = random_points.begin(); it != random_points.end(); ++it)
+    {
         for (int k = 0; k < 2; ++k)
         {
             {
                 km.centroids[*it][k] = km.dataset[*it][k];
             }
         }
+    }
 
     for (int p = 0; p < km.clusters_number; ++p)
     {

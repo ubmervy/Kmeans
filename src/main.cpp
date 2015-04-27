@@ -1,7 +1,7 @@
 #include "../include/Kmeans.h"
-#include "../include/EuclidianDistance.h"
-#include "../include/PointStealer.h"
-#include "../include/RandomPoints.h"
+//#include "../include/EuclidianDistance.h"
+//#include "../include/PointStealer.h"
+//#include "../include/RandomPoints.h"
 #include "../include/DataManipulation.h"
 #include <iostream>
 #include <vector>
@@ -42,7 +42,7 @@ int main()
         std::cout << std::endl;
     }*/
 
-    Kmeans<float, PointStealer, EuclidianDistance, RandomPoints> km (3, 4, dataset);
+    Kmeans<float, PointStealer, EuclidianDistance, RandomPoints> km (3, 10, dataset);
     km.Cluster();
     return 0;
 }

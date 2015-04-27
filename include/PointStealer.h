@@ -1,12 +1,7 @@
 #ifndef POINTSTEALER_H
 #define POINTSTEALER_H
-#include "../include/EuclidianDistance.h"
-#include "../include/Kmeans.h"
+#include <utility>
 
-template <typename PointsBaseType, typename EmptyClusterPolicy, template<class, class> class IterationMethod, typename InitialCentroids>
-class Kmeans;
-
-template <typename PointsBaseType, typename EmptyClusterPolicy>
 class EuclidianDistance;
 
 class PointStealer
@@ -14,9 +9,7 @@ class PointStealer
     public:
         PointStealer();
         virtual ~PointStealer();
-        template<typename PointsBaseType, typename EmptyClusterPolicy, template<typename, typename> class IterationMethod, typename InitialCentroids>
-        void HandleEmptyClusters(EuclidianDistance<PointsBaseType, EmptyClusterPolicy> &iter_method,
-                                                                   Kmeans<PointsBaseType, EmptyClusterPolicy, IterationMethod, InitialCentroids>& km);
+        std::pair<int, int>  HandleEmptyClusters(EuclidianDistance &iter_method, int empty_cluster);
     protected:
     private:
 };

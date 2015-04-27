@@ -6,8 +6,8 @@
 #include <limits>
 #include <vector>
 #include <algorithm>
+#include <utility>
 
-template <typename PointsBaseType, typename EmptyClusterPolicy>
 class EuclidianDistance;
 
 PointStealer::PointStealer()
@@ -20,25 +20,52 @@ PointStealer::~PointStealer()
     //dtor
 }
 
-template<typename PointsBaseType, typename EmptyClusterPolicy, template<typename, typename> class IterationMethod, typename InitialCentroids>
-void PointStealer::HandleEmptyClusters(EuclidianDistance<PointsBaseType, EmptyClusterPolicy> &iter_method,
-                                       Kmeans<PointsBaseType, EmptyClusterPolicy, IterationMethod, InitialCentroids>& km)
+std::pair<int, int> PointStealer::HandleEmptyClusters(EuclidianDistance &iter_method, int empty_cluster)
 {
-    //find empty clusters indexes
-    std::vector<int> empty_clusters_indexes;
-    for (int i = 0; i < iter_method.distances.size(); ++i)
+    std::vector<double> cluster_variances;
+    cluster_variances.resize(iter_method.distances.size());
+    for (unsigned int j = 0; j < iter_method.distances.size(); ++j)
     {
-        if (iter_method.new_assignments.find(i)==iter_method.new_assignments.end())
+        //find cluster variance
+        for (unsigned int i = 0; i < iter_method.new_assignments[j].size(); ++i)
         {
-            empty_clusters_indexes.emplace_back(i);
+            cluster_variances[j] += iter_method.distances[j][i];
         }
     }
 
-    //move closest points to empty clusters
-    while(!empty_clusters_indexes.empty())
+
+    //weight sums of distances with cluster's points number or with infinity in case cluster contains one point only to exclude cluster from donor candidates;
+    int maxVarianceCluster = 0;
+    for (unsigned int j = 0; j < iter_method.distances.size(); ++j)
+    {
+        cluster_variances[j] /= cluster_variances[j]/ ((iter_method.new_assignments[j].size() == 1) ? std::numeric_limits<int>::max() : iter_method.new_assignments[j].size());
+        if (cluster_variances[j] > maxVarianceCluster)
+        {
+            maxVarianceCluster = j;
+        }
+    }
+
+    //find the furthest point of cluster with max variance
+    double maxDistance = std::numeric_limits<double>::max();
+    int furthest_point;
+    for (unsigned int i = 0; i < iter_method.distances.size(); ++i)
+    {
+        for (unsigned int j = 0; j < iter_method.distances[maxVarianceCluster].size(); ++j)
+        {
+            if (cluster_variances[j] > maxVarianceCluster)
+            {
+                maxDistance = iter_method.distances[j][i];
+                furthest_point = i;
+            }
+        }
+    }
+
+    return std::make_pair(furthest_point, maxVarianceCluster);
+   /* //move closest points to empty clusters
+    for(int e = 0; e < iter_method.empty_clusters_indexes.size(); ++e)
     {
         //find clostest point
-        int empty_cluster = empty_clusters_indexes.back();
+        int empty_cluster = iter_method.empty_clusters_indexes.at(e);
         int min_distance_point = std::numeric_limits<float>::max();
         int min_point_index;
 
@@ -52,17 +79,16 @@ void PointStealer::HandleEmptyClusters(EuclidianDistance<PointsBaseType, EmptyCl
         }
 
         //move closest point from its closest cluster and add to new_assignments
-        for (int j = 0; j < iter_method.distances.size(); ++j)
+        for (int j = 0; j < iter_method.new_assignments.size(); ++j)
         {
-            if(iter_method.new_assignments[j].find(min_point_index)!=iter_method.new_assignments[j].end())
+        //if the point is in current cluster push it to empty cluster and erase from the really closest one
+            std::vector<int>::iterator it = std::find(iter_method.new_assignments[j].begin(), iter_method.new_assignments[j].end(), min_point_index);
+            if(it!=iter_method.new_assignments[j].end())
             {
-                iter_method.new_assignments[empty_cluster].emplace_back(*(iter_method.new_assignments[j].find(min_point_index)));
-                iter_method.new_assignments[j].erase(iter_method.new_assignments[j].find(min_point_index));
+                iter_method.new_assignments[empty_cluster].emplace_back(min_point_index);
+                iter_method.new_assignments[j].erase(it);
+                break;
             }
         }
-    empty_clusters_indexes.pop_back();
-    }
+    }*/
 }
-
-template void PointStealer::HandleEmptyClusters(EuclidianDistance<float, PointStealer> &iter_method,
-        Kmeans<float, PointStealer, EuclidianDistance, RandomPoints>& km);
